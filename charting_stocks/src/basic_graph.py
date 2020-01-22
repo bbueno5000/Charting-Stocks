@@ -1,8 +1,9 @@
 ﻿import datetime
 import matplotlib
+import matplotlib.dates as mpl_dates
+from matplotlib.finance import candlestick
 import matplotlib.pyplot as pyplot
 import matplotlib.ticker as mpl_ticker
-import matplotlib.dates as mpl_dates
 import numpy
 import time
 
@@ -16,12 +17,16 @@ def graph_data(stock):
         date, closep, highp, lowp, openp, volume = numpy.loadtxt(
             stock_file, delimiter=',', unpack=true, converters={0: mpl_dates.strpdate2num('%Y%m%d')}
             )
+        x = 0
+        y = len(date)
+        candle_args = []
+        while x < y:
+            append_line = date[x], openp[x], closep[x], highp[x], lowp[x], volume[x]
+            candle_args.append(append_line)
+            x += 1
         figure = pyplot.figure()
         axis1 = pyplot.subplot2grid((5,4), (0,0), rowspan=4, colspan=4)
-        axis1.plot(date, openp)
-        axis1.plot(date, highp)
-        axis1.plot(date, lowp)
-        axis1.plot(date, closep)
+        candlestick(axis1, candle_args, width=1, colorup='g', colordown='r')
         pyplot.ylabel('Stock Price')
         axis1.grid(True)
         axis2 = pyplot.subplot2grid((5,4), (4,0), sharex=axis1, rowspan=1, colspan=4)
