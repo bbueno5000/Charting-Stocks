@@ -5,12 +5,12 @@
     <ProjectGuid>68024f7b-bcca-4001-8eb4-17fc1d29dc27</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>charting_stocks\src\charting_stocks.py</StartupFile>
+    <StartupFile>src\charting_stocks.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>ChartingStocks</Name>
+    <Name>charting_stocks</Name>
     <RootNamespace>charting_stocks</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|graphing_stocks_env</InterpreterId>
   </PropertyGroup>
@@ -23,13 +23,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="charting_stocks\src\basic_graph.py" />
-    <Compile Include="charting_stocks\src\charting_stocks.py" />
-    <Compile Include="charting_stocks\src\getting_stock_prices.py" />
+    <Compile Include="src\basic_graph.py" />
+    <Compile Include="src\charting_stocks.py" />
+    <Compile Include="src\getting_stock_prices.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="charting_stocks\" />
-    <Folder Include="charting_stocks\src\" />
+    <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
