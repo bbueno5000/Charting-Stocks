@@ -32,7 +32,6 @@
     <Folder Include="charting_stocks\src\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="charting_stocks\README.md" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
