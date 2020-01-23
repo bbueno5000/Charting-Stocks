@@ -7,5 +7,4 @@
 
 ## Contributors
 
-- [Harrison](https://github.com/Sentdex)
 - [B. Bueno](https://github.com/bbueno25)
