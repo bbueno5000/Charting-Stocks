@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="charting_stocks\src\basic_graph.py" />
     <Compile Include="charting_stocks\src\charting_stocks.py" />
     <Compile Include="charting_stocks\src\getting_stock_prices.py" />
   </ItemGroup>
@@ -31,10 +32,10 @@
     <Folder Include="charting_stocks\src\" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="CondaEnv|CondaEnv|charting_stocks_env" />
+    <Content Include="charting_stocks\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="charting_stocks\README.md" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|charting_stocks_env" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
