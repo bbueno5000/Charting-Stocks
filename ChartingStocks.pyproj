@@ -12,7 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>ChartingStocks</Name>
     <RootNamespace>charting_stocks</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|charting_stocks_env</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|graphing_stocks_env</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,7 +35,7 @@
     <Content Include="charting_stocks\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="CondaEnv|CondaEnv|charting_stocks_env" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|graphing_stocks_env" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
