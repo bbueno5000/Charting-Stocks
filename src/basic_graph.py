@@ -49,8 +49,20 @@ def graph_data(stock, moving_average_1, moving_average_2):
             colorup='#9eff15', 
             colordown='#f1717'
             )
-        axis_1.plot(date[-starting_point:], average_1[-starting_point:], '#5998ff', label=label_1, linewidth=1.5)
-        axis_1.plot(date[-starting_point:], average_2[-starting_point:], '#e1edf9', label=label_2, linewidth=1.5)
+        axis_1.plot(
+            date[-starting_point:], 
+            average_1[-starting_point:], 
+            '#5998ff', 
+            label=label_1, 
+            linewidth=1.5
+            )
+        axis_1.plot(
+            date[-starting_point:], 
+            average_2[-starting_point:], 
+            '#e1edf9', 
+            label=label_2, 
+            linewidth=1.5
+            )
         axis_1.xaxis.set_major_locator(mpl_ticker, MaxNLocator(10))
         axis_1.xaxis.set_major_formatter(mpl_dates.DateFormatter('%Y-%m-%d'))
         axis_1.grid(True, color='w')
@@ -63,8 +75,8 @@ def graph_data(stock, moving_average_1, moving_average_2):
         axis_1.tick_params(axis='y', colors='w')
         for label in axis_1.xaxis.get_ticklabels():
             label.set_rotation(45)
-        pyplot.ylabel('Stock Price')
-        pyplot.legend(loc=3, fancybox=True, prop={'size': 7})
+        pyplot.ylabel('Stock Price And Volume')
+        pyplot.legend(fancybox=True, loc=9, ncol=2, prop={'size': 7})
         # axis 1 volume
         volume_min = 0
         axis_1_volume = axis_1.twinx()
@@ -91,6 +103,28 @@ def moving_average(values, window):
     weights = numpy.repeat(1.0, window) / window
     smas = numpy.convolve(values, weights, 'valid')
     return smas
+
+def relative_strength_index(prices, n=14):
+    deltas = np.diff(prices)
+    seed = deltas[:n+1]
+    up = seed[seed>=0].sum()/n
+    down = -seed[seed<0].sum()/n
+    relative_strength = up/down
+    relative_strength_index = np.zeros_like(prices)
+    relative_strength_index[:n] = 100.0 - 100.0 / (1.0+relative_strength)
+    for i in range(n, len(prices)):
+        delta = deltas[i-1]
+        if delta > 0:
+            up_value = delta
+            down_value = 0.0
+        else:
+            up_valuw = 0.0
+            down_value = -delta
+        up = (up * (n-1) + up_value) / n
+        down = (down * (n-1) + down_value) / n
+        relative_strength = up / down
+        relative_strength_index[i] = 100.0 - 100.0 / (1.0+relative_strength)
+    return relative_strength_index
 
 if __name__ == '__main__':
 	for stock in each_stock:
