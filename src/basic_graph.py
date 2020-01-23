@@ -27,12 +27,20 @@ def graph_data(stock, moving_average_1, moving_average_2):
         average_1 = moving_average(closep, moving_average_1)
         average_2 = moving_average(closep, moving_average_2)
         starting_point = len(date[moving_average_2-1:])
+        label_1 = str(moving_average_1) + ' SMA'
+        label_2 = str(moving_average_2) + ' SMA'
         figure = pyplot.figure(facecolor='#07000d')
         # axis 1
         axis1 = pyplot.subplot2grid((5,4), (0,0), rowspan=4, colspan=4, axisbg='#07000d')
-        candlestick(axis1, candle_args, width=1, colorup='#9eff15', colordown='#f1717')
-        axis1.plot(date[-starting_point:], average_1[-starting_point:])
-        axis1.plot(date[-starting_point:], average_2[-starting_point:])
+        candlestick(
+            axis1, 
+            candle_args[-starting_point:], 
+            width=1, 
+            colorup='#9eff15', 
+            colordown='#f1717'
+            )
+        axis1.plot(date[-starting_point:], average_1[-starting_point:], '#5998ff', label=label_1, linewidth=1.5)
+        axis1.plot(date[-starting_point:], average_2[-starting_point:], '#e1edf9', label=label_2, linewidth=1.5)
         axis1.xaxis.set_major_locator(mpl_ticker, MaxNLocator(10))
         axis1.xaxis.set_major_formatter(mpl_dates.DateFormatter('%Y-%m-%d'))
         axis1.grid(True, color='w')
@@ -45,8 +53,9 @@ def graph_data(stock, moving_average_1, moving_average_2):
         for label in axis1.xaxis.get_ticklabels():
             label.set_rotation(90)
         pyplot.ylabel('Stock Price')
-        volume_min = volume.min()
+        pyplot.legend(loc=3, fancybox=True, prop={'size': 7})
         # axis 2
+        volume_min = 0
         axis2 = pyplot.subplot2grid((5,4), (4,0), sharex=axis1, rowspan=1, colspan=4, axisbg='#07000d')
         axis2.plot(date, volume, '#00ffe8', linewidth=0.8)
         axis2.fill_between(date, volume_min, volume, facecolor='#00ffe8', alpha=0.5)
