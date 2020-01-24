@@ -160,7 +160,7 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         ax0.spines['top'].set_color('#5998ff')
         ax0.spines['left'].set_color('#5998ff')
         ax0.spines['right'].set_color('#5998ff')
-        ax0.text(0.015, 0.95, 'RSI (14) ', va='top', color='w', transform=ax0.transAxes)
+        ax0.text(0.015, 0.95, 'RSI (14)', va='top', color='w', transform=ax0.transAxes)
         ax0.tick_params(axis='x', colors='w')
         ax0.tick_params(axis='y', colors='w')
         ax0.set_yticks([30, 70])
@@ -193,8 +193,9 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         num_ema = 9
         ema_slow, ema_fast, macd = compute_macd(closep)
         ema9 = exponential_moving_average(macd, num_ema)
-        ax2.plot(date[-sp:], macd[-sp:])
-        ax2.plot(date[-sp:], ema9[-sp:])
+        ax2.plot(date[-sp:], macd[-sp:], color='#4EE6FD', lw=2)
+        ax2.plot(date[-sp:], ema9[-sp:], cplor='#E1EDF9', lw=1)
+        ax2.text(0.015, 0.95, 'MACD 12, 26, 9', va='top', color='w', transform=ax2.transAxes)
         ax2.fill_between(date[-sp:], macd[-sp:]-ema9[-sp:], 0, alpha=0.5, facecolor=fill_color, edgecolor=fill_color)
         ax2.spines['bottom'].set_color('#5998ff')
         ax2.spines['top'].set_color('#5998ff')
@@ -202,8 +203,9 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         ax2.spines['right'].set_color('#5998ff')
         ax2.tick_params(axis='x', colors='w')
         ax2.tick_params(axis='y', colors='w')
-        pyplot.ylabel('MACD', color='w')
+        #pyplot.ylabel('MACD', color='w')
         pyplot.gca().yaxis.set_major_locator(mpl_ticker.MaxNLocator(prune='upper'))
+        ax2.yaxis.set_major_locator(mpl_ticker.MaxNLocator(nbins=5, prune='upper'))
         for label in ax2.xaxis.get_ticklabels():
             label.set_rotation(45)
         # super
