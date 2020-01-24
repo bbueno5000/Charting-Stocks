@@ -12,6 +12,17 @@ matplotlib.rcParams.update({'font.size': 9})
 
 each_stock = 'EBAY', 'AAPL', 'TSLA'
 
+def exponential_moving_average(values, window):
+    """
+    Definitions:
+        ema = exponential moving average
+    """
+    weights = np.exp(np.linspace(-1.0, 0.0, window))
+    weights /= weights.sum()
+    ema = np.convolve(values, weights, mode='full')[:len(values)]
+    ema[:window] = ema[window]
+    return ema
+
 def graph_data(stock, mov_avg_1, mov_avg_2):
     """
     Parameters:
