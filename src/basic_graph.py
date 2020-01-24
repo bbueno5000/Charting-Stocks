@@ -1,7 +1,7 @@
 ﻿import datetime
 import matplotlib
 import matplotlib.dates as mpl_dates
-from matplotlib.finance import candlestick
+import matplotlib.finance.candlestick as candlestick
 import matplotlib.pyplot as pyplot
 import matplotlib.ticker as mpl_ticker
 import numpy
@@ -11,6 +11,24 @@ import time
 matplotlib.rcParams.update({'font.size': 9})
 
 each_stock = 'EBAY', 'AAPL', 'TSLA'
+
+def compute_macd(self, x, slow=26, fast=12):
+        """
+        Compute MACD using a fast and slow exponential moving average.
+
+        Definitions:
+            macd - moving average convergence/divergence
+            ema - exponential moving average
+            macd line = 12 ema - 26 ema
+            signal line = 9 ema of macd line
+            histogram = macd line - signal line
+
+        Returns:
+            len(x) arrays: value is emaslow, emafast, macd
+        """
+        ema_slow = self.exponential_moving_average(x, slow)
+        ema_fast = self.exponential_moving_average(x, fast)
+        return emaslow, emafast, emafast - emaslow
 
 def exponential_moving_average(values, window):
     """
@@ -35,6 +53,7 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         av2 - average 2
         ax0 - axis 0
         ax1 - axis 1
+        ax2 - axis 2
         ax1vol - axis 1 volume
         rsi - relative strength index
         sp - starting point
@@ -94,8 +113,6 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         ax1.spines['right'].set_color('#5998ff')
         ax1.tick_params(axis='x', colors='w')
         ax1.tick_params(axis='y', colors='w')
-        for label in ax1.xaxis.get_ticklabels():
-            label.set_rotation(45)
         pyplot.ylabel('Stock Price And Volume')
         ma_legend = pyplot.legend(fancybox=True, loc=9, ncol=2, prop={'size': 7})
         ma_legend.get_frame().set_alpha(0.4)
@@ -158,9 +175,27 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         ax1vol.set_ylim(0, 2*volume.max())
         ax1vol.tick_params(axis='x', colors='w')
         ax1vol.tick_params(axis='y', colors='w')
+        # axis 2
+        ax2 = pyplot.subplot2grid(
+            (6, 4), 
+            (5, 0), 
+            sharex=ax1, 
+            rowspan=1, 
+            colspan=4, 
+            axisbg='#07000d'
+            )
+        ax2.spines['bottom'].set_color('#5998ff')
+        ax2.spines['top'].set_color('#5998ff')
+        ax2.spines['left'].set_color('#5998ff')
+        ax2.spines['right'].set_color('#5998ff')
+        ax2.tick_params(axis='x', colors='w')
+        ax2.tick_params(axis='y', colors='w')
+        for label in ax2.xaxis.get_ticklabels():
+            label.set_rotation(45)
         # super
         pyplot.suptitle(stock, color='w')
         pyplot.setp(ax0.get_xticklabels(), visible=False)
+        pyplot.setp(ax1.get_xticklabels(), visible=False)
         pyplot.subplots_adjust(left=0.9, bottom=0.14, right=0.94, top=0.95, wspace=0.2, hspace=0)
         pyplot.show()
         figure.savefig('example.png', facecolor=figure.get_facecolor())
