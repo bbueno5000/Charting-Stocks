@@ -5,6 +5,7 @@ from matplotlib.finance import candlestick
 import matplotlib.pyplot as pyplot
 import matplotlib.ticker as mpl_ticker
 import numpy
+import pylab
 import time
 
 matplotlib.rcParams.update({'font.size': 9})
@@ -32,6 +33,9 @@ def graph_data(stock, moving_average_1, moving_average_2):
         figure = pyplot.figure(facecolor='#07000d')
         # axis 0
         axis_0 = pyplot.subplot2grid((5,4), (0,0), rowspan=1, colspan=4, axisbg='#07000d')
+        relative_strength_index = relative_strength_index(closep)
+        axis_0.plot(date, relative_strength_index)
+        axis_0.set_ylim(0, 100)
         axis_0.spines['bottom'].set_color('#5998ff')
         axis_0.spines['top'].set_color('#5998ff')
         axis_0.spines['left'].set_color('#5998ff')
@@ -76,7 +80,10 @@ def graph_data(stock, moving_average_1, moving_average_2):
         for label in axis_1.xaxis.get_ticklabels():
             label.set_rotation(45)
         pyplot.ylabel('Stock Price And Volume')
-        pyplot.legend(fancybox=True, loc=9, ncol=2, prop={'size': 7})
+        ma_legend = pyplot.legend(fancybox=True, loc=9, ncol=2, prop={'size': 7})
+        ma_legend.get_frame().set_alpha(0.4)
+        text_ed = pylab.gca().get_legend().get_texts()
+        pylab.setp(text_ed[0:5], color='w')
         # axis 1 volume
         volume_min = 0
         axis_1_volume = axis_1.twinx()
@@ -128,5 +135,5 @@ def relative_strength_index(prices, n=14):
 
 if __name__ == '__main__':
 	for stock in each_stock:
-		pull_data(stock, 12, 26)
+		pull_data(stock, 20, 200)
 	time.sleep(500)
