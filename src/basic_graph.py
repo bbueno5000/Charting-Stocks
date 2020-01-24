@@ -184,12 +184,23 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
             colspan=4, 
             axisbg='#07000d'
             )
+        fill_color = '#00ffe8'
+        num_slow = 26
+        num_fast = 12
+        num_ema = 9
+        ema_slow, ema_fast, macd = compute_macd(closep)
+        ema9 = exponential_moving_average(macd, num_ema)
+        ax2.plot(date[-sp:], macd[-sp:])
+        ax2.plot(date[-sp:], ema9[-sp:])
+        ax2.fill_between(date[-sp:], macd[-sp:]-ema9[-sp:], 0, alpha=0.5, facecolor=fill_color, edgecolor=fill_color)
         ax2.spines['bottom'].set_color('#5998ff')
         ax2.spines['top'].set_color('#5998ff')
         ax2.spines['left'].set_color('#5998ff')
         ax2.spines['right'].set_color('#5998ff')
         ax2.tick_params(axis='x', colors='w')
         ax2.tick_params(axis='y', colors='w')
+        pyplot.ylabel('MACD', color='w')
+        pyplot.gca().yaxis.set_major_locator(mpl_ticker.MaxNLocator(prune='upper'))
         for label in ax2.xaxis.get_ticklabels():
             label.set_rotation(45)
         # super
