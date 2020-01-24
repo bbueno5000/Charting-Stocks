@@ -79,38 +79,39 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         sp = len(date[mov_avg_2-1:])
         label_1 = str(mov_avg_1) + ' SMA'
         label_2 = str(mov_avg_2) + ' SMA'
-        figure = pyplot.figure(facecolor='#07000d')
+        figure = pyplot.figure(facecolor='#07000D')
         # axis 1
-        ax1 = pyplot.subplot2grid((5,4), (1,0), rowspan=4, colspan=4, axisbg='#07000d')
+        ax1 = pyplot.subplot2grid((5,4), (1,0), rowspan=4, colspan=4, axisbg='#07000D')
         candlestick(
             ax1, 
             candle_args[-sp:], 
             width=0.6, 
-            colorup='#9eff15', 
-            colordown='#f1717'
+            colorup='#53C156', 
+            colordown='#FF1717'
             )
         ax1.plot(
             date[-sp:], 
             av1[-sp:], 
-            '#5998ff', 
+            '#E1EDF9', 
             label=label_1, 
             linewidth=1.5
             )
         ax1.plot(
             date[-sp:], 
             av2[-sp:], 
-            '#e1edf9', 
+            '#4EE6FD', 
             label=label_2, 
             linewidth=1.5
             )
         ax1.xaxis.set_major_locator(mpl_ticker, MaxNLocator(10))
         ax1.xaxis.set_major_formatter(mpl_dates.DateFormatter('%Y-%m-%d'))
+        pyplot.gca().yaxis.set_major_locator(mpl_ticker.MaxNLocator(prune='upper'))
         ax1.grid(True, color='w')
         ax1.yaxis.label.set_color('w')
-        ax1.spines['bottom'].set_color('#5998ff')
-        ax1.spines['top'].set_color('#5998ff')
-        ax1.spines['left'].set_color('#5998ff')
-        ax1.spines['right'].set_color('#5998ff')
+        ax1.spines['bottom'].set_color('#5998FF')
+        ax1.spines['top'].set_color('#5998FF')
+        ax1.spines['left'].set_color('#5998FF')
+        ax1.spines['right'].set_color('#5998FF')
         ax1.tick_params(axis='x', colors='w')
         ax1.tick_params(axis='y', colors='w')
         pyplot.ylabel('Stock Price And Volume')
@@ -125,43 +126,45 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
             sharex=ax1, 
             rowspan=1, 
             colspan=4, 
-            axisbg='#07000d'
+            axisbg='#07000D'
             )
         rsi = relative_strength_index(closep)
-        rsi_color = '#00ffe8'
+        rsi_color = '#1A8782'
+        pos_color = '#386D13'
+        neg_color = '#8F2020'
         ax0.plot(
             date[-sp:], 
             rsi[-sp:], 
             rsi_color, 
             linewidth=1.5
             )
-        ax0.axhline(70, color=rsi_color)
-        ax0.axhline(30, color=rsi_color)
+        ax0.axhline(70, color=neg_color)
+        ax0.axhline(30, color=pos_color)
         ax0.fill_between(
             date[-sp:],
             rsi[-sp:], 
             70, 
             where=(rsi[-sp:]>=70), 
-            facecolor=rsi_color, 
-            edgecolor=rsi_color
+            facecolor=neg_color, 
+            edgecolor=neg_color
             )
         ax0.fill_between(
             date[-sp:], 
             rsi[-sp:], 
             30, 
             where=(rsi[-sp:]<=30), 
-            facecolor=rsi_color, 
-            edgecolor=rsi_color
+            facecolor=pos_color, 
+            edgecolor=neg_color
             )
         ax0.spines['bottom'].set_color('#5998ff')
         ax0.spines['top'].set_color('#5998ff')
         ax0.spines['left'].set_color('#5998ff')
         ax0.spines['right'].set_color('#5998ff')
+        ax0.text(0.015, 0.95, 'RSI (14) ', va='top', color='w', transform=ax0.transAxes)
         ax0.tick_params(axis='x', colors='w')
         ax0.tick_params(axis='y', colors='w')
         ax0.set_yticks([30, 70])
         #pyplot.gca().yaxis.set_major_locator(mpl_ticker.MaxNLocator(prune='lower'))
-        pyplot.ylabel('RSI')
         # axis 1 volume
         vol_min = 0
         ax1vol = ax1.twinx()
