@@ -60,7 +60,21 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         vol_min - volume minimum
     """
     try:
-        stock_file = stock + '.txt'
+        print('Currently Pulling', stock)
+        url_to_visit = 'http://chartapi.finance.yahoo.com/instrument/1.0/' + stock + '/chartdata;type=quote;range=10y/csv'
+        stock_file =[]
+        try:
+            source_code = urllib.request.urlopen(url_to_visit).read().decode()
+            split_source = source_code.split('\n')
+            for each_line in split_source:
+                splitLine = each_line.split(',')
+                if len(splitLine)==6:
+                    if 'values' not in each_line:
+                        stock_file.append(each_line)
+        except Exception as e:
+            print(str(e), 'failed to organize pulled data.')
+    except Exception as e:
+        print(str(e), 'failed to pull pricing data')
         date, closep, highp, lowp, openp, volume = numpy.loadtxt(
             stock_file, 
             delimiter=',', 
@@ -251,6 +265,5 @@ def relative_strength_index(prices, n=14):
     return rsi
 
 if __name__ == '__main__':
-	for stock in each_stock:
-		pull_data(stock, 20, 200)
-	time.sleep(500)
+    stock_to_use = raw_input('Stock to chart: ')
+    pull_data(stock_to_use, 20, 200)
