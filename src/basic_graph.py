@@ -226,7 +226,25 @@ def graph_data(stock, mov_avg_1, mov_avg_2):
         pyplot.suptitle(stock, color='w')
         pyplot.setp(ax0.get_xticklabels(), visible=False)
         pyplot.setp(ax1.get_xticklabels(), visible=False)
-        pyplot.subplots_adjust(left=0.9, bottom=0.14, right=0.94, top=0.95, wspace=0.2, hspace=0)
+        ax1.annotate(
+            'Big News!', 
+            (date[510], av1[520]), 
+            xytext=(0.8, 0.8), 
+            textcoords='axes fraction',
+            arrowprops=dict(facecolor='white', shrink=0.05),
+            fontsize='14',
+            color='w',
+            horizontalalignment='right', 
+            verticalalignment='bottom'
+            )
+        pyplot.subplots_adjust(
+            left=0.9, 
+            bottom=0.14, 
+            right=0.94, 
+            top=0.95, 
+            wspace=0.2, 
+            hspace=0
+            )
         pyplot.show()
         figure.savefig('example.png', facecolor=figure.get_facecolor())
     except Exception as e:
